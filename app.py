@@ -1,6 +1,6 @@
 from PySimpleGUI import PySimpleGUI as sg
 import os
-from funcoes import *
+from utilidades.funcoes import pegar_arquivo, play_sound, is_playing_sound, stop, pause, unpause
 
 sg.theme('reddit')
 
@@ -8,11 +8,11 @@ song_title_column = [
   [sg.Text('Que pais é este?', background_color='white', auto_size_text=True, text_color='black', font='Roboto',)]
 ]
 
-PLAY_BUTTON_PLAY = '/Users/pedrinho/Bots/imagens/playButton.png'
-FORWARD_BUTTON_PATH = '/Users/pedrinho/Bots/imagens/forwardButton.png'
-BACKWARD_BUTTON_PATH = '/Users/pedrinho/Bots/imagens/backwardBtn.png'
-PAUSE_BUTTON_PATH = '/Users/pedrinho/Bots/imagens/pauseButton.png'
-ALBUM_COVER_MUSICA_PATH = '/Users/pedrinho/Bots/imagens/legiaoUrbana.png'
+PLAY_BUTTON_PLAY = '/Users/pedrinho/Bots/utilidades/imagens/playButton.png'
+FORWARD_BUTTON_PATH = '/Users/pedrinho/Bots/utilidades/imagens/forwardButton.png'
+BACKWARD_BUTTON_PATH = '/Users/pedrinho/Bots/utilidades/imagens/backwardBtn.png'
+PAUSE_BUTTON_PATH = '/Users/pedrinho/Bots/utilidades/imagens/pauseButton.png'
+ALBUM_COVER_MUSICA_PATH = '/Users/pedrinho/Bots/utilidades/imagens/legiaoUrbana.png'
 
 
 
@@ -40,6 +40,7 @@ main = [
   ]
 ]
 
+
 window = sg.Window('App em python', layout=main, size=(480, 700))
 
 while True:
@@ -47,7 +48,7 @@ while True:
   if eventos == sg.WINDOW_CLOSED:
     break
   elif eventos == 'play':
-    directory = '/Users/pedrinho/Bots/musicas/legiao.wav'
+    directory = '/Users/pedrinho/Bots/utilidades/musicas/legiao.wav'
     if is_playing_sound():
       pass
     if is_playing_sound() == False:

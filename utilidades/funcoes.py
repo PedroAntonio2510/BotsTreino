@@ -2,7 +2,7 @@ import os
 from pygame import mixer
 mixer.init()
 
-path = '/Users/pedrinho/Bots/musicas/legiao.wav'
+path = '/Users/pedrinho/Bots/utilidades/musicas/legiao.wav'
 
 def pegar_arquivo(directory):
   directories = []
