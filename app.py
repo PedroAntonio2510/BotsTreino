@@ -1,8 +1,6 @@
 from PySimpleGUI import PySimpleGUI as sg
 import os
 from utilidades.funcoes import *
-from pygame import mixer
-mixer.init()
 
 sg.theme('reddit')
 
@@ -54,15 +52,22 @@ main = [
 
 window = sg.Window('App em python', layout=main, size=(480, 700), background_color='white', finalize=True, grab_anywhere=True, resizable=False)
 
-directory = sg.PopupGetFile('Selecione o arquivo')
+directory = sg.popup_get_folder('Selecione o diretorio: ')
+print("Diretorio selecionado: ", directory)
+songs_in_directory = get_files_inside_directory_not_recursive(directory)
+song_count = len(songs_in_directory)
+current_song_index = 0
 
-#songs_in_directory = get_files_inside_directory_not_recursive(directory)
-#song_count = len(songs_in_directory)
-#current_song_index = 0
-#def update_display():
-  #if 0 <= current_song_index < song_count:
-    #window['song_name'].update(os.path.basename(songs_in_directory[current_song_index]))
-    #window['currently_playing'].update(f'Playing: {os.path.basename(songs_in_directory[current_song_index])}')
+def next_song():
+    if current_song_index + 1 < song_count:
+      stop()
+      current_song_index += 1
+      play_sound(songs_in_directory[current_song_index])
+      update_display()
+def update_display():
+  if 0 <= current_song_index < song_count:
+    window['song_name'].update(os.path.basename(songs_in_directory[current_song_index]))
+    window['currently_playing'].update(f'Playing: {os.path.basename(songs_in_directory[current_song_index])}')
 
 while True:
   eventos, valores =  window.read()
@@ -70,10 +75,12 @@ while True:
     break
   elif eventos == 'play':
     if not is_playing_sound():
-      play_sound(directory)
+      play_sound(songs_in_directory)
   elif eventos == 'pause':
     if is_playing_sound():
       pause()
     else:
       unpause()
     pass
+  elif eventos == 'next':
+    next_song()
