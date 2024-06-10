@@ -2,18 +2,18 @@ import os
 from pygame import mixer
 mixer.init()
 
-path = '/Users/pedrinho/Bots/utilidades/musicas/legiao.wav'
 
-def pegar_arquivo(directory):
+def get_files_inside_directory_not_recursive(directory):
   directories = []
-  for (root, dirs, files) in os.walk(directory):
-    for file in files:
-      directories.append(root + os.sep + file)
+  for entry in os.listdir(directory):
+     entry_path = os.path.join(directory, entry)
+     if os.path.isdir(entry_path):
+        directories.append(entry_path)
+  return directories
 
-def play_sound(directory):
-  mixer.music.load(directory)
+def play_sound(sound_path):
+  mixer.music.load(sound_path)
   mixer.music.play()
-
 def stop():
   mixer.music.stop()
 
@@ -25,4 +25,3 @@ def unpause():
 
 def is_playing_sound():
   return mixer.music.get_busy()
-

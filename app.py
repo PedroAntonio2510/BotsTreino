@@ -1,12 +1,20 @@
 from PySimpleGUI import PySimpleGUI as sg
 import os
-from utilidades.funcoes import pegar_arquivo, play_sound, is_playing_sound, stop, pause, unpause
+from utilidades.funcoes import *
+from pygame import mixer
+mixer.init()
 
 sg.theme('reddit')
 
 song_title_column = [
-  [sg.Text('Que pais é este?', background_color='white', auto_size_text=True, text_color='black', font='Roboto',)]
+  [sg.Text('De o play...', background_color='white', auto_size_text=True, text_color='black', font='Roboto',)]
 ]
+
+currently_playing = [
+  [sg.Text(background_color='white', size=(200, 0), text_color='black',
+            font=('Tahoma', 10), key='currently_playing')]
+]
+
 
 PLAY_BUTTON_PLAY = '/Users/pedrinho/Bots/utilidades/imagens/playButton.png'
 FORWARD_BUTTON_PATH = '/Users/pedrinho/Bots/utilidades/imagens/forwardButton.png'
@@ -29,29 +37,39 @@ main = [
     sg.Canvas(background_color='white',
                size=(128, 200), pad=None), 
     sg.Image(filename= BACKWARD_BUTTON_PATH,
-              size=(35,44), pad=None), 
+              size=(35,44), pad=None, key='previous', enable_events=True), 
     sg.Image(filename= PLAY_BUTTON_PLAY,
               size=(64, 64), enable_events=True,pad=None, key='play'), 
     sg.Image(filename=PAUSE_BUTTON_PATH, 
              enable_events=True, pad=None, key='pause', size=(64,64)),
     sg.Image(filename= FORWARD_BUTTON_PATH,
-              size=(35, 44), pad=None), 
+              size=(35, 44), pad=None, key='next', enable_events=True), 
     sg.Canvas(background_color='white', size=(128,200), pad=None)
+  ],
+  [
+    sg.Column(layout=currently_playing, justification='c', element_justification='c', background_color='black', pad=None)
   ]
 ]
 
 
-window = sg.Window('App em python', layout=main, size=(480, 700))
+window = sg.Window('App em python', layout=main, size=(480, 700), background_color='white', finalize=True, grab_anywhere=True, resizable=False)
+
+directory = sg.PopupGetFile('Selecione o arquivo')
+
+#songs_in_directory = get_files_inside_directory_not_recursive(directory)
+#song_count = len(songs_in_directory)
+#current_song_index = 0
+#def update_display():
+  #if 0 <= current_song_index < song_count:
+    #window['song_name'].update(os.path.basename(songs_in_directory[current_song_index]))
+    #window['currently_playing'].update(f'Playing: {os.path.basename(songs_in_directory[current_song_index])}')
 
 while True:
   eventos, valores =  window.read()
   if eventos == sg.WINDOW_CLOSED:
     break
   elif eventos == 'play':
-    directory = '/Users/pedrinho/Bots/utilidades/musicas/legiao.wav'
-    if is_playing_sound():
-      pass
-    if is_playing_sound() == False:
+    if not is_playing_sound():
       play_sound(directory)
   elif eventos == 'pause':
     if is_playing_sound():
