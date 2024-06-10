@@ -49,6 +49,17 @@ main = [
   ]
 ]
 
+def update_display():
+  if 0 <= current_song_index < song_count:
+    window['song_name'].update(os.path.basename(songs_in_directory[current_song_index]))
+    window['currently_playing'].update(f'Playing: {os.path.basename(songs_in_directory[current_song_index])}')
+
+def next_song():
+    if current_song_index + 1 < song_count:
+      stop()
+      current_song_index += 1
+      play_sound(songs_in_directory[current_song_index])
+      update_display()
 
 window = sg.Window('App em python', layout=main, size=(480, 700), background_color='white', finalize=True, grab_anywhere=True, resizable=False)
 
@@ -57,17 +68,6 @@ print("Diretorio selecionado: ", directory)
 songs_in_directory = get_files_inside_directory_not_recursive(directory)
 song_count = len(songs_in_directory)
 current_song_index = 0
-
-def next_song():
-    if current_song_index + 1 < song_count:
-      stop()
-      current_song_index += 1
-      play_sound(songs_in_directory[current_song_index])
-      update_display()
-def update_display():
-  if 0 <= current_song_index < song_count:
-    window['song_name'].update(os.path.basename(songs_in_directory[current_song_index]))
-    window['currently_playing'].update(f'Playing: {os.path.basename(songs_in_directory[current_song_index])}')
 
 while True:
   eventos, valores =  window.read()
