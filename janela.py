@@ -5,7 +5,8 @@ sg.theme('Reddit')
 
 linha = [
   [sg.Button('Abrir DaveTheDiver', key='dave'), [sg.Button('Abrir Player de Música', key='player')]],
-  [sg.Button('Abrir App de tarefas', key='tarefas')]
+  [sg.Button('Abrir App de tarefas', key='tarefas')],
+  [sg.Button('Abrir calculadora', key='calculadora')]
 ]
 
 
@@ -26,5 +27,9 @@ while True:
   if eventos == 'tarefas':
     import apptarefas
     apptarefas.main()
+  if eventos == 'calculadora':
+    from calcculadora import app
+    from calcculadora import funcoes
+    app.main()
     
   
