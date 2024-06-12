@@ -50,6 +50,7 @@ def main():
   while True:
     eventos, valores = window.read()
     if eventos == sg.WINDOW_CLOSED:
+      sg.popup('Programa encerrado')
       break
     elif eventos in '0123456789':
       current_number += eventos
