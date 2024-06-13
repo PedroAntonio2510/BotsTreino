@@ -11,9 +11,9 @@ def criar_layout():
   ]
 
   linha2 = [
-    [sg.Text('⏬ Download Speed - ', font='Roboto 15 bold'), sg.Text(size=(60,1), key='DOWNLOAD', font='Courier 14')],
-    [sg.Text('⏫ Upload Speed - ', font='Roboto 15 bold'), sg.Text(size=(60, 1), key='UPLOAD', font='Courier 14')],
-    [sg.Text('Your Ping is - ',font='Roboto 15 bold'), sg.Text(size=(60, 1), key='PING', font='Courier 14')]
+    [sg.Text('⏬ Download Speed - ', font='Roboto 15 bold'), sg.Text(size=(50,1), key='DOWNLOAD', font='Courier 14')],
+    [sg.Text('⏫ Upload Speed - ', font='Roboto 15 bold'), sg.Text(size=(50, 1), key='UPLOAD', font='Courier 14')],
+    [sg.Text('Your Ping is - ',font='Roboto 15 bold'), sg.Text(size=(50, 1), key='PING', font='Courier 14')]
   ]
 
 
@@ -27,7 +27,6 @@ def criar_layout():
 
   return sg.Window('Test internet speed', layout=main, icon='speed.ico', size=(380,260))
 
-window = criar_layout()
 
 def check_speed():
   global download_speed, upload_speed
@@ -50,7 +49,7 @@ def mudar_layout():
   
   window['PING'].update(f'{ping}')
     
-
+window = criar_layout()
 def main():
   while True:
     events, valores = window.read()
